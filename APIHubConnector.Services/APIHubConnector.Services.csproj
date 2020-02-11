@@ -8,4 +8,8 @@
     <ProjectReference Include="..\APIHubConnector.Core\APIHubConnector.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Netlify\DTOs\" />
+  </ItemGroup>
+
 </Project>

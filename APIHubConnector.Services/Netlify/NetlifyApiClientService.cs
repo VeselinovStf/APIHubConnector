@@ -5,7 +5,7 @@ using APIHUbConnector.Core.Interfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace APIHUbConnector.Core.APIClientService
+namespace APIHUbConnector.Services.Netlify
 {
     public class NetlifyApiClientService :
         IAPIHostClientService<NetlifyHubClient>,

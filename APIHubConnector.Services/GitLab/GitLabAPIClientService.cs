@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace APIHUbConnector.Core.APIClientService
+namespace APIHUbConnector.Services.GitLab
 {
     public class GitLabAPIClientService :
         IAPIRepoClientService<RepoPullTemplateDTO>,

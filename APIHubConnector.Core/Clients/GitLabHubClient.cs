@@ -11,14 +11,14 @@ namespace APIHUbConnector.Core.Clients
     {
         private HttpClient Client { get; }
 
-        private IFileTransferrer<ConvertedFileElementDTO> FileTransporter { get; }
+       
 
         public GitLabHubClient(
-            HttpClient client,
-            IFileTransferrer<ConvertedFileElementDTO> fileTransporter)
+            HttpClient client)
+            
         {
             this.Client = client;
-            this.FileTransporter = fileTransporter;
+           
         }
     }
 }

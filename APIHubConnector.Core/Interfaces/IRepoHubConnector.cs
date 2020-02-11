@@ -20,6 +20,6 @@ namespace APIHUbConnector.Core.Interfaces
         /// <returns>Pushed or not bool value</returns>
         Task<bool> PushProject(string hubProjectId, string templateName, string accesToken, bool copySubDir = true);
 
-        Task<T> PullDataFromHub(string hubId, string repositoryName, string accesTokken);
+       
     }
 }
