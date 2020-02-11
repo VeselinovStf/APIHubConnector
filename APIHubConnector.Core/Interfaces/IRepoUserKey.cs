@@ -2,8 +2,8 @@
 
 namespace APIHUbConnector.Core.Interfaces
 {
-    public interface IRepoUserKey
+    public interface IRepoUserKey<T>
     {
-        Task<bool> AddKey(string accesToken, string key, string title);
+        Task<T> AddKey(string accesToken, string key, string title);
     }
 }

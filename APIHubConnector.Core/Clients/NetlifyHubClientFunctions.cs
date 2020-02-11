@@ -24,7 +24,14 @@ namespace APIHUbConnector.Core.Clients
             throw new NetlifyClientDeployKeysException($"{nameof(NetlifyClientDeployKeysException)} : Can't create deploy key to host hub : {response.StatusCode}");
         }
 
-        public async Task<string> PostCreateAsync(string netlifySiteName, string repositoryName, string repositoryId, string deployKeyId, string accesToken)
+        public async Task<string> PostCreateAsync(
+            string netlifySiteName,
+            string repositoryName,
+            string repositoryId, 
+            string deployKeyId, 
+            string accesToken,
+            string netlifyCMDCommand,
+            string netlifyDirBuildName)
         {
             var model = new DeploySiteDTO()
             {
@@ -33,11 +40,11 @@ namespace APIHUbConnector.Core.Clients
                 {
                     Provider = "gitlab",
                     Id = repositoryId,
-                    Repo = "VeselinovStf/" + repositoryName,
+                    Repo = repositoryName,
                     Private = true,
                     Branch = "master",
-                    CMD = "jekyll build",
-                    Dir = "_site/",
+                    CMD = netlifyCMDCommand,
+                    Dir = netlifyDirBuildName,
                     DeployKeyId = deployKeyId
                 }
             };

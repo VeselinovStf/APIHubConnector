@@ -1,4 +1,5 @@
-﻿using APIHUbConnector.Core.Clients;
+﻿using APIHubConnector.Services.Models;
+using APIHUbConnector.Core.Clients;
 using APIHUbConnector.Core.DTOs;
 using APIHUbConnector.Core.Interfaces;
 
@@ -9,8 +10,8 @@ using System.Threading.Tasks;
 namespace APIHUbConnector.Services.GitLab
 {
     public class GitLabAPIClientService :
-        IAPIRepoClientService<RepoPullTemplateDTO>,
-        IRepoUserKey
+        IAPIRepoClientService<BaseResponse>,
+        IRepoUserKey<BaseResponse>
     {
         private readonly GitLabHubClient client;
 
@@ -20,21 +21,56 @@ namespace APIHUbConnector.Services.GitLab
             this.client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public async Task<bool> AddKey(string accesToken, string key, string title)
+        public async Task<BaseResponse> AddKey(string accesToken, string key, string title)
         {
-            return await this.client.AddRepoKey(accesToken, key, title);
+            try
+            {
+                var result = await this.client.AddRepoKey(accesToken, key, title);
+
+                return new BaseResponse(true);
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponse(false, ex.Message);
+            }
+            
         }
 
-        public async Task<string> CreateHubAsync(string name, string accesTokken)
+        public async Task<BaseResponse> CreateHubAsync(string name, string accesTokken)
         {
-            return await client.PostCreateAsync(name, accesTokken);
+           
+
+            try
+            {
+                var result =  await client.PostCreateAsync(name, accesTokken);
+
+                return new BaseResponse(true, result);
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponse(false, ex.Message);
+            }
+           
         }
 
 
 
-        public async Task<bool> PushDataToHub(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents)
+        public async Task<BaseResponse> PushDataToHub(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents)
         {
-            return await client.PushToHubAsync(hubId, accesTokken, filePaths, fileContents);
+            try
+            {
+                var result = await client.PushToHubAsync(hubId, accesTokken, filePaths, fileContents);
+
+                return new BaseResponse(true);
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponse(false, ex.Message);
+            }
+            
         }
     }
 }
