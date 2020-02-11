@@ -1,5 +1,7 @@
 ﻿using APIHubConnector.Services.Interfaces;
 using APIHubConnector.Services.Models;
+using APIHUbConnector.Services.FileTransfer;
+using APIHUbConnector.Services.FileTransfer.DTOs;
 using DemoApp.Web.APIKeyModels;
 using DemoApp.Web.Models;
 using DemoApp.Web.ViewModels;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DemoApp.Web.Controllers
@@ -15,17 +18,20 @@ namespace DemoApp.Web.Controllers
     {
         private readonly INetlifyApiClientService<BaseResponse> _hostingService;
         private readonly IGitLabAPIClientService<BaseResponse> _repoService;
+        private readonly IFileTransferrer<FileTransfererResult> _fileTransferrer;
         private readonly AuthRepoHubConnectorOptions _repoOptions;
         private readonly AuthHostingConnectorOptions _hostingOptions;
 
         public HomeController(
             INetlifyApiClientService<BaseResponse> hostingService,
             IGitLabAPIClientService<BaseResponse> repoService,
+            IFileTransferrer<FileTransfererResult> fileTransferrer,
             IOptions<AuthRepoHubConnectorOptions> repoOptions,
             IOptions<AuthHostingConnectorOptions> hostingOptions)
         {
             this._hostingService = hostingService;
             this._repoService = repoService;
+            this._fileTransferrer = fileTransferrer;
             this._repoOptions = repoOptions.Value;
             this._hostingOptions = hostingOptions.Value;
         }
@@ -59,13 +65,18 @@ namespace DemoApp.Web.Controllers
                         var filePaths = new List<string>();
                         var fileContents = new List<string>();
 
+                        var defaultStoreTypeSiteFileRead = await this._fileTransferrer.FilesToList(model.LocalPathToProjectTemplate);
+
+                        filePaths = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FilePath));
+                        fileContents = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FileContent));
+
                         var pushToRepo = await this._repoService.PushDataToHub(createRepoHubId.Message, _repoOptions.RepoAccesTokken, filePaths, fileContents);
 
                         if (pushToRepo.Success)
                         {
                             var deployCall = await this._hostingService.CreateHubAsync(
-                                model.RepositoryName, model.ProjectName,createRepoHubId.Message, hostingDeployKey.Message, _hostingOptions.HostAccesToken,
-                                model.ProjectCmdCommand,model.ProjectBuildDirName);
+                                model.RepositoryName, model.ProjectName, createRepoHubId.Message, hostingDeployKey.Message, _hostingOptions.HostAccesToken,
+                                model.ProjectCmdCommand, model.ProjectBuildDirName);
 
                             if (deployCall.Success)
                             {
@@ -85,7 +96,7 @@ namespace DemoApp.Web.Controllers
                     {
                         return RedirectToAction("Error", "Home", new { message = repoUserKey.Message });
                     }
-                
+
                 }
                 else
                 {
@@ -97,11 +108,11 @@ namespace DemoApp.Web.Controllers
                 return RedirectToAction("Error", "Home", new { message = hostingDeployKey.Message });
             }
 
-            
+
         }
 
         public IActionResult Complete()
-        {          
+        {
             return View();
         }
 

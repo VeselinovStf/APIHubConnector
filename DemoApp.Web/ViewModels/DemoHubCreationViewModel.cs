@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DemoApp.Web.ViewModels
+﻿namespace DemoApp.Web.ViewModels
 {
     public class DemoHubCreationViewModel
     {
@@ -14,5 +9,7 @@ namespace DemoApp.Web.ViewModels
         public string ProjectCmdCommand { get; set; }
 
         public string ProjectBuildDirName { get; set; }
+
+        public string LocalPathToProjectTemplate { get; set; }
     }
 }

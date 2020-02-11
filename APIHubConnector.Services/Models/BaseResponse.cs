@@ -15,7 +15,7 @@ namespace APIHubConnector.Services.Models
 
         }
 
-        public BaseResponse(bool succes, string message, string publicKey): base(succes,message)
+        public BaseResponse(bool succes, string message, string publicKey) : base(succes, message)
         {
             PublicKey = publicKey;
         }
