@@ -20,6 +20,7 @@ Create two classes for GitLab And Netlify access tokens ( see DemoApp.Web.APIKey
 
 In StartUp.cs of your project add
 
+<code>
 Supply API Access Tokens ( Add User Secrets )
 Create configuration classes
 
@@ -37,14 +38,17 @@ services.AddHttpClient<GitLabHubClient>(c =>
 services.AddHttpClient<NetlifyHubClient>(c =>
    c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
    );
+</code>
 
 Use functions:
 
+<code>
  INetlifyApiClientService<BaseResponse>
  IGitLabAPIClientService<BaseResponse> 
  IFileTransferrer<FileTransfererResult> 
  IOptions<AuthRepoHubConnectorOptions> 
  IOptions<AuthHostingConnectorOptions>
+</code>
 
 Go to HomeController of DemoApp to see required steps to do the job
 
