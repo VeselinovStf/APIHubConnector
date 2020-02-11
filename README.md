@@ -2,7 +2,7 @@
 
 ## Description
 
-APIHC allows users to upload local project to GitLab and deploy it try Netlify
+APIHC allows users to upload local project to GitLab and deploy it try Netlify.
 APIHC is tested with deploying of local Jekyll project
 
 ## Usage
@@ -10,35 +10,35 @@ APIHC is tested with deploying of local Jekyll project
 ### Getting Project
 
 Clone or Download project.
-User APIHubConnector.Core and APIHubConnector.Service in your project
+Use APIHubConnector.Core and APIHubConnector service in your project.
 
 ### Setting Up
 
-Create two classes for GitLab And Netlify access tokens ( see DemoApp.Web.APIKeyModels namespace )
+Create two classes for GitLab And Netlify access tokens ( see DemoApp.Web.APIKeyModels namespace ).
 
 #### Register Functions
 
 In StartUp.cs of your project add
 
-<code>
- //1- Supply API Access Tokens ( Add User Secrets )
-            // Create configuration classes
-            services.Configure<AuthRepoHubConnectorOptions>(Configuration);
-            services.Configure<AuthHostingConnectorOptions>(Configuration);
-            //2- Register APIHubConnector
-            APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);
-            //3- Add http client to ApiHubConnector HubClients with api ( use url from appsettings.json )
-            services.AddHttpClient<GitLabHubClient>(c =>
-                c.BaseAddress = new Uri("https://gitlab.com/api/v4/")
-                );
+Supply API Access Tokens ( Add User Secrets )
+Create configuration classes
 
-            services.AddHttpClient<NetlifyHubClient>(c =>
-               c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
-               );
+services.Configure<AuthRepoHubConnectorOptions>(Configuration);
+services.Configure<AuthHostingConnectorOptions>(Configuration);
 
-</code>
+Register APIHubConnector
+APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);
 
-Use functions try:
+Add http client to ApiHubConnector HubClients with api ( use url from appsettings.json )
+services.AddHttpClient<GitLabHubClient>(c =>
+    c.BaseAddress = new Uri("https://gitlab.com/api/v4/")
+    );
+
+services.AddHttpClient<NetlifyHubClient>(c =>
+   c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
+   );
+
+Use functions:
 
  INetlifyApiClientService<BaseResponse>
  IGitLabAPIClientService<BaseResponse> 
