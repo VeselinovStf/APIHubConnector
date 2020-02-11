@@ -20,35 +20,19 @@ Create two classes for GitLab And Netlify access tokens ( see DemoApp.Web.APIKey
 
 In StartUp.cs of your project add
 
-<code>
-Supply API Access Tokens ( Add User Secrets )
-Create configuration classes
-
-services.Configure<AuthRepoHubConnectorOptions>(Configuration);
-services.Configure<AuthHostingConnectorOptions>(Configuration);
-
-Register APIHubConnector
-APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);
-
-Add http client to ApiHubConnector HubClients with api ( use url from appsettings.json )
-services.AddHttpClient<GitLabHubClient>(c =>
-    c.BaseAddress = new Uri("https://gitlab.com/api/v4/")
-    );
-
-services.AddHttpClient<NetlifyHubClient>(c =>
-   c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
-   );
-</code>
+<code>services.Configure<AuthRepoHubConnectorOptions>(Configuration);</code>
+<code>services.Configure<AuthHostingConnectorOptions>(Configuration);</code>
+<code>APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);</code>
+<code>services.AddHttpClient<GitLabHubClient>(c => c.BaseAddress = new Uri("https://gitlab.com/api/v4/"));</code>
+<code>services.AddHttpClient<NetlifyHubClient>(c => c.BaseAddress = new Uri("https://api.netlify.com/api/v1/"));</code>
 
 Use functions:
 
-<code>
- INetlifyApiClientService<BaseResponse>
- IGitLabAPIClientService<BaseResponse> 
- IFileTransferrer<FileTransfererResult> 
- IOptions<AuthRepoHubConnectorOptions> 
- IOptions<AuthHostingConnectorOptions>
-</code>
+<code>INetlifyApiClientService<BaseResponse></code>
+<code>IGitLabAPIClientService<BaseResponse></code>
+<code>IFileTransferrer<FileTransfererResult></code>
+<code>IOptions<AuthRepoHubConnectorOptions></code> 
+<code>IOptions<AuthHostingConnectorOptions></code>
 
 Go to HomeController of DemoApp to see required steps to do the job
 
