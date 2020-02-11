@@ -14,7 +14,7 @@ namespace APIHUbConnector.Core.Clients
 
 
         public async Task<string> PostCreateAsync(string newHubName, string credidentials)
-        {        
+        {
             var model = new CreateHubDTO()
             {
                 Name = newHubName
@@ -34,7 +34,7 @@ namespace APIHUbConnector.Core.Clients
             }
 
             throw new GitHubClientPostCreateException($"{nameof(GitHubClientPostCreateException)} : Can't create post to repo hub : {response.StatusCode}");
-        } 
+        }
 
         public async Task<bool> AddRepoKey(string accesToken, string key, string title)
         {

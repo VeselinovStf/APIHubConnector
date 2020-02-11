@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace APIHUbConnector.Core.Interfaces
 {
@@ -7,7 +6,7 @@ namespace APIHUbConnector.Core.Interfaces
     {
         Task<T> CreateHubAsync(string name, string accesTokken);
 
-  
+
     }
 
 

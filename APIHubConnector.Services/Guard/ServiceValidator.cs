@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace APIHubConnector.Services.Guard
+﻿namespace APIHubConnector.Services.Guard
 {
     public static class ServiceValidator
     {
@@ -26,7 +22,7 @@ namespace APIHubConnector.Services.Guard
             return false;
         }
 
-        public static string MessageCreator(string className, string methodName, string parammeterName,string message)
+        public static string MessageCreator(string className, string methodName, string parammeterName, string message)
         {
             return $"ERROR: {className} : {methodName} : {parammeterName} : --- {message}";
         }

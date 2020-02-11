@@ -1,13 +1,9 @@
-﻿using APIHubConnector.Core.Interfaces;
+﻿
+using APIHubConnector.Services.Interfaces;
 using APIHubConnector.Services.Models;
-using APIHubConnector.Services.Netlify.DTOs;
-using APIHUbConnector.Core.Interfaces;
 using APIHUbConnector.Services.GitLab;
 using APIHUbConnector.Services.Netlify;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace APIHubConnector.Services
 {
@@ -17,7 +13,6 @@ namespace APIHubConnector.Services
         {
             services.AddScoped<IGitLabAPIClientService<BaseResponse>, GitLabAPIClientService>();
             services.AddScoped<INetlifyApiClientService<BaseResponse>, NetlifyApiClientService>();
-            
 
         }
     }

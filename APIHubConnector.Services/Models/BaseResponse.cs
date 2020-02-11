@@ -1,7 +1,4 @@
 ﻿using APIHubConnector.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace APIHubConnector.Services.Models
 {
@@ -12,10 +9,10 @@ namespace APIHubConnector.Services.Models
         {
         }
 
-        public BaseResponse(bool success, string message) : base(success,message)
+        public BaseResponse(bool success, string message) : base(success, message)
         {
-          
-            
+
+
         }
     }
 }

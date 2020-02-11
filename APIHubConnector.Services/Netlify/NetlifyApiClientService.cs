@@ -1,10 +1,9 @@
-﻿using APIHubConnector.Core.Interfaces;
+﻿
 using APIHubConnector.Services.Guard;
+using APIHubConnector.Services.Interfaces;
 using APIHubConnector.Services.Models;
 using APIHubConnector.Services.Netlify.DTOs;
 using APIHUbConnector.Core.Clients;
-using APIHUbConnector.Core.DTOs;
-using APIHUbConnector.Core.Interfaces;
 
 using System;
 using System.Threading.Tasks;
@@ -20,10 +19,10 @@ namespace APIHUbConnector.Services.Netlify
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
         }
-    
+
 
         public async Task<BaseResponse> CreateHubAsync(string netlifySiteName, string repositoryName, string repositoryId,
-            string deployKeyId, string accesToken,string netlifyCMDCommand, string netlifyDirBuildName)
+            string deployKeyId, string accesToken, string netlifyCMDCommand, string netlifyDirBuildName)
         {
             if (ServiceValidator.ObjectIsNull(netlifySiteName))
             {
@@ -97,7 +96,7 @@ namespace APIHUbConnector.Services.Netlify
 
             try
             {
-                var result =  await client.PostCreateAsync(netlifySiteName, repositoryName, repositoryId, deployKeyId, accesToken, netlifyCMDCommand, netlifyDirBuildName);
+                var result = await client.PostCreateAsync(netlifySiteName, repositoryName, repositoryId, deployKeyId, accesToken, netlifyCMDCommand, netlifyDirBuildName);
 
                 return new BaseResponse(true, result);
             }
@@ -106,7 +105,7 @@ namespace APIHUbConnector.Services.Netlify
 
                 return new BaseResponse(false, ex.Message);
             }
-        }                                                                                                              
+        }
 
         public async Task<BaseResponse> CreateDeployKey(string accesToken)
         {
@@ -125,15 +124,15 @@ namespace APIHUbConnector.Services.Netlify
                 var result = await client.DeployKeys(accesToken);
 
                 return new DeplayKeyResponseDTO(true, result.Id, result.PublicKey, result.CreatedAt);
-                
+
             }
             catch (Exception ex)
             {
                 return new DeplayKeyResponseDTO(false, ex.Message);
             }
-            
+
         }
 
-       
+
     }
 }

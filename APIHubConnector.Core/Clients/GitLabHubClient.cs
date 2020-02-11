@@ -1,6 +1,4 @@
-﻿using APIHUbConnector.Core.DTOs;
-using APIHUbConnector.Core.Interfaces;
-using System.Net.Http;
+﻿using System.Net.Http;
 
 namespace APIHUbConnector.Core.Clients
 {
@@ -11,14 +9,14 @@ namespace APIHUbConnector.Core.Clients
     {
         private HttpClient Client { get; }
 
-       
+
 
         public GitLabHubClient(
             HttpClient client)
-            
+
         {
             this.Client = client;
-           
+
         }
     }
 }

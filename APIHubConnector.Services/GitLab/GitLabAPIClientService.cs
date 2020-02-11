@@ -1,9 +1,8 @@
-﻿using APIHubConnector.Core.Interfaces;
+﻿
 using APIHubConnector.Services.Guard;
+using APIHubConnector.Services.Interfaces;
 using APIHubConnector.Services.Models;
 using APIHUbConnector.Core.Clients;
-using APIHUbConnector.Core.DTOs;
-using APIHUbConnector.Core.Interfaces;
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 namespace APIHUbConnector.Services.GitLab
 {
     public class GitLabAPIClientService : IGitLabAPIClientService<BaseResponse>
-      
+
     {
         private readonly GitLabHubClient client;
 
@@ -26,11 +25,11 @@ namespace APIHUbConnector.Services.GitLab
         {
             if (ServiceValidator.StringIsNullOrEmpty(accesToken))
             {
-                return new BaseResponse(false, 
+                return new BaseResponse(false,
                     ServiceValidator.MessageCreator(
-                        nameof(GitLabAPIClientService), 
-                        nameof(AddKey), 
-                        nameof(accesToken), 
+                        nameof(GitLabAPIClientService),
+                        nameof(AddKey),
+                        nameof(accesToken),
                         "invalid_parameter_null_or_empty"));
             }
 
@@ -65,7 +64,7 @@ namespace APIHUbConnector.Services.GitLab
 
                 return new BaseResponse(false, ex.Message);
             }
-            
+
         }
 
         public async Task<BaseResponse> CreateHubAsync(string name, string accesTokken)
@@ -92,7 +91,7 @@ namespace APIHUbConnector.Services.GitLab
 
             try
             {
-                var result =  await client.PostCreateAsync(name, accesTokken);
+                var result = await client.PostCreateAsync(name, accesTokken);
 
                 return new BaseResponse(true, result);
             }
@@ -101,7 +100,7 @@ namespace APIHUbConnector.Services.GitLab
 
                 return new BaseResponse(false, ex.Message);
             }
-           
+
         }
 
 
@@ -159,7 +158,7 @@ namespace APIHUbConnector.Services.GitLab
 
                 return new BaseResponse(false, ex.Message);
             }
-            
+
         }
     }
 }

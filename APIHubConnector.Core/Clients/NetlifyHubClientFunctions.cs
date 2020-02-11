@@ -27,8 +27,8 @@ namespace APIHUbConnector.Core.Clients
         public async Task<string> PostCreateAsync(
             string netlifySiteName,
             string repositoryName,
-            string repositoryId, 
-            string deployKeyId, 
+            string repositoryId,
+            string deployKeyId,
             string accesToken,
             string netlifyCMDCommand,
             string netlifyDirBuildName)
