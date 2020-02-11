@@ -30,11 +30,11 @@ namespace DemoApp.Web
             APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);
             //3- Add http client to ApiHubConnector HubClients with api url from appsettings.json
             services.AddHttpClient<GitLabHubClient>(c =>
-                c.BaseAddress = new Uri(Configuration.GetValue<string>("ApiHubConnectorClients:GitLabAPIAddress"))
+                c.BaseAddress = new Uri("https://gitlab.com/api/v4/")
                 );
 
             services.AddHttpClient<NetlifyHubClient>(c =>
-               c.BaseAddress = new Uri(Configuration.GetValue<string>("ApiHubConnectorClients:NetlifyAPIAddress"))
+               c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
                );
 
 

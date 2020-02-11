@@ -43,7 +43,7 @@ namespace DemoApp.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(DemoHubCreationViewModel model)
         {

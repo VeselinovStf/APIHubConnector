@@ -8,6 +8,7 @@ using APIHUbConnector.Services.FileTransfer.DTOs;
 using APIHUbConnector.Services.GitLab;
 using APIHUbConnector.Services.Netlify;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace APIHubConnector.Services
 {
@@ -18,8 +19,11 @@ namespace APIHubConnector.Services
             services.AddScoped<IGitLabAPIClientService<BaseResponse>, GitLabAPIClientService>();
             services.AddScoped<INetlifyApiClientService<BaseResponse>, NetlifyApiClientService>();
             services.AddScoped<IFileReader<FileReaderResult>, FileReader>();
-            services.AddScoped<IFileTransferrer<FileTransfererResult>, FileTransferrer>();
-
+            
+            services.AddTransient<IFileTransferrer<FileTransfererResult>>(r => new FileTransferrer(
+                r.GetRequiredService<IFileReader<FileReaderResult>>(),
+                new List<string> { ".img", ".jpg", ".png", ".otf", ".eot", ".ttf", ".woff", ".woff2" }
+                ));
         }
     }
 }
