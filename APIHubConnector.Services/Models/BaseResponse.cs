@@ -1,22 +1,21 @@
-﻿using System;
+﻿using APIHubConnector.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace APIHubConnector.Services.Models
 {
-    public class BaseResponse
+    public class BaseResponse : BaseResponseCoreModel
     {
-        public string Message { get; }
-        public bool Success { get; }
 
-        public BaseResponse(bool success)
+        public BaseResponse(bool success) : base(success)
         {
-            Success = success;
         }
-        public BaseResponse(bool success, string message) : this(success)
+
+        public BaseResponse(bool success, string message) : base(success,message)
         {
           
-            Message = message;
+            
         }
     }
 }

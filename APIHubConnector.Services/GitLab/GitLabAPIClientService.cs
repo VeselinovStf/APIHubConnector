@@ -1,4 +1,5 @@
-﻿using APIHubConnector.Services.Guard;
+﻿using APIHubConnector.Core.Interfaces;
+using APIHubConnector.Services.Guard;
 using APIHubConnector.Services.Models;
 using APIHUbConnector.Core.Clients;
 using APIHUbConnector.Core.DTOs;
@@ -10,9 +11,8 @@ using System.Threading.Tasks;
 
 namespace APIHUbConnector.Services.GitLab
 {
-    public class GitLabAPIClientService :
-        IAPIRepoClientService<BaseResponse>,
-        IRepoUserKey<BaseResponse>
+    public class GitLabAPIClientService : IGitLabAPIClientService<BaseResponse>
+      
     {
         private readonly GitLabHubClient client;
 

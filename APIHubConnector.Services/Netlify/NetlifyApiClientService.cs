@@ -1,4 +1,5 @@
-﻿using APIHubConnector.Services.Guard;
+﻿using APIHubConnector.Core.Interfaces;
+using APIHubConnector.Services.Guard;
 using APIHubConnector.Services.Models;
 using APIHubConnector.Services.Netlify.DTOs;
 using APIHUbConnector.Core.Clients;
@@ -10,9 +11,7 @@ using System.Threading.Tasks;
 
 namespace APIHUbConnector.Services.Netlify
 {
-    public class NetlifyApiClientService :
-        IAPIHostClientService<BaseResponse>,
-        IHostDeployToken<DeplayKeyResponseDTO>
+    public class NetlifyApiClientService : INetlifyApiClientService<BaseResponse>
     {
         private readonly NetlifyHubClient client;
 
@@ -21,6 +20,7 @@ namespace APIHUbConnector.Services.Netlify
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
         }
+    
 
         public async Task<BaseResponse> CreateHubAsync(string netlifySiteName, string repositoryName, string repositoryId,
             string deployKeyId, string accesToken,string netlifyCMDCommand, string netlifyDirBuildName)
@@ -108,7 +108,7 @@ namespace APIHUbConnector.Services.Netlify
             }
         }                                                                                                              
 
-        public async Task<DeplayKeyResponseDTO> CreateDeployKey(string accesToken)
+        public async Task<BaseResponse> CreateDeployKey(string accesToken)
         {
             if (ServiceValidator.StringIsNullOrEmpty(accesToken))
             {
@@ -133,5 +133,7 @@ namespace APIHUbConnector.Services.Netlify
             }
             
         }
+
+       
     }
 }
