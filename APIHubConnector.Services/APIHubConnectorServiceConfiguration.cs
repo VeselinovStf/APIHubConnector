@@ -16,10 +16,12 @@ namespace APIHubConnector.Services
     {
         public static void ConfigureAPIConnector(this IServiceCollection services)
         {
+            //Add clients
             services.AddScoped<IGitLabAPIClientService<BaseResponse>, GitLabAPIClientService>();
             services.AddScoped<INetlifyApiClientService<BaseResponse>, NetlifyApiClientService>();
-            services.AddScoped<IFileReader<FileReaderResult>, FileReader>();
-            
+
+            //Add project reading service
+            services.AddScoped<IFileReader<FileReaderResult>, FileReader>();            
             services.AddTransient<IFileTransferrer<FileTransfererResult>>(r => new FileTransferrer(
                 r.GetRequiredService<IFileReader<FileReaderResult>>(),
                 new List<string> { ".img", ".jpg", ".png", ".otf", ".eot", ".ttf", ".woff", ".woff2" }

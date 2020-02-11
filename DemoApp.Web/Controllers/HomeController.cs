@@ -53,15 +53,17 @@ namespace DemoApp.Web.Controllers
 
             if (hostingDeployKey.Success)
             {
-                //2- Create repo and
+                //2- Create repo and get id
                 var createRepoHubId = await this._repoService.CreateHubAsync(model.RepositoryName, _repoOptions.RepoAccesTokken);
 
                 if (createRepoHubId.Success)
                 {
+                    //3- add deploy key to repository
                     var repoUserKey = await this._repoService.AddKey(_repoOptions.RepoAccesTokken, hostingDeployKey.Message[1], model.ProjectName);
 
                     if (repoUserKey.Success)
                     {
+                        //4- get project files
                         var filePaths = new List<string>();
                         var fileContents = new List<string>();
 
@@ -70,12 +72,15 @@ namespace DemoApp.Web.Controllers
                         filePaths = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FilePath));
                         fileContents = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FileContent));
 
+                        //5- Push all files to repository
                         var pushToRepo = await this._repoService.PushDataToHub(createRepoHubId.Message[0], _repoOptions.RepoAccesTokken, filePaths, fileContents);
 
                         if (pushToRepo.Success)
                         {
+                            //6- update Hosting repository name 
                             var pushRepositoryName = model.GitLabClientName + "/" + model.RepositoryName;
 
+                            //7- deploy project try gitlab to netlify
                             var deployCall = await this._hostingService.CreateHubAsync(
                                 model.ProjectName, pushRepositoryName, createRepoHubId.Message[0], hostingDeployKey.Message[0], _hostingOptions.HostAccesToken,
                                 model.ProjectCmdCommand, model.ProjectBuildDirName);

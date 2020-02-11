@@ -24,11 +24,12 @@ namespace DemoApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             //1- Supply API Access Tokens ( Add User Secrets )
+            // Create configuration classes
             services.Configure<AuthRepoHubConnectorOptions>(Configuration);
             services.Configure<AuthHostingConnectorOptions>(Configuration);
             //2- Register APIHubConnector
             APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);
-            //3- Add http client to ApiHubConnector HubClients with api url from appsettings.json
+            //3- Add http client to ApiHubConnector HubClients with api ( use url from appsettings.json )
             services.AddHttpClient<GitLabHubClient>(c =>
                 c.BaseAddress = new Uri("https://gitlab.com/api/v4/")
                 );
