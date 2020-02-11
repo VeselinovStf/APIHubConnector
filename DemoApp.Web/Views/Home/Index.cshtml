@@ -4,19 +4,37 @@
 }
 
 <h1>Upload project to Netlify Hosting try GitLab Repository</h1>
-<form>
+<form method="post">
   <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label asp-for="@Model.RepositoryName">Repository Name</label>
+    <input asp-for="@Model.RepositoryName" type="text" class="form-control" id="repositoryName" name="repositoryName"  placeholder="GitLab repository name">
+    <small id="repositoryNameHelp" class="form-text text-muted">Enter new GitLab repository name.</small>
+  </div>
+     <div class="form-group">
+    <label asp-for="@Model.GitLabClientName">Repository Name</label>
+    <input asp-for="@Model.GitLabClientName" type="text" class="form-control" id="gitLabClientName" name="gitLabClientName"  placeholder="GitLab user name">
+    <small id="gitLabClientName" class="form-text text-muted">Enter your GitLab user name.</small>
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+     <label asp-for="@Model.ProjectName">Project Name</label>
+    <input asp-for="@Model.ProjectName" type="text" class="form-control" id="projectName" name="projectName"  placeholder="Netlify Project name">
+    <small id="repositoryNameHelp" class="form-text text-muted">Enter new Netlify Site Name - must be unique and may throw error if project already exists</small>
   </div>
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  <div class="form-group">
+      <label asp-for="@Model.ProjectCmdCommand">Netlify CMD Command</label>
+    <input asp-for="@Model.ProjectCmdCommand" type="text" class="form-control" id="projectCmdCommand" name="projectCmdCommand"  placeholder="jekyll build">
+    <small id="projectCmdCommand" class="form-text text-muted">In order Netlify to deplay and build project you must specify CMD command (for demo i use jekyll site)</small>
+  </div>
+      <div class="form-group">
+      <label asp-for="@Model.ProjectBuildDirName">Netlify Build Directory</label>
+    <input asp-for="@Model.ProjectBuildDirName" type="text" class="form-control" id="projectBuildDirName" name="projectBuildDirName"  placeholder="_site/">
+    <small id="projectBuildDirName" class="form-text text-muted">Settup Deploy build folder (for demo i use jekyll site - so _site/)</small>
+  </div>
+     
+      <div class="form-group">
+      <label asp-for="@Model.LocalPathToProjectTemplate">Local project full-path location</label>
+    <input asp-for="@Model.LocalPathToProjectTemplate" type="text" class="form-control" id="localPathToProjectTemplate" name="localPathToProjectTemplate"  placeholder="local path to project">
+    <small id="localPathToProjectTemplate" class="form-text text-muted">Coppy and Paste full local path to project that you want to upload</small>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

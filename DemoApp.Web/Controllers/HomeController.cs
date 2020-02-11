@@ -58,7 +58,7 @@ namespace DemoApp.Web.Controllers
 
                 if (createRepoHubId.Success)
                 {
-                    var repoUserKey = await this._repoService.AddKey(_repoOptions.RepoAccesTokken, createRepoHubId.PublicKey, model.ProjectName);
+                    var repoUserKey = await this._repoService.AddKey(_repoOptions.RepoAccesTokken, hostingDeployKey.Message[1], model.ProjectName);
 
                     if (repoUserKey.Success)
                     {
@@ -70,50 +70,57 @@ namespace DemoApp.Web.Controllers
                         filePaths = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FilePath));
                         fileContents = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FileContent));
 
-                        var pushToRepo = await this._repoService.PushDataToHub(createRepoHubId.Message, _repoOptions.RepoAccesTokken, filePaths, fileContents);
+                        var pushToRepo = await this._repoService.PushDataToHub(createRepoHubId.Message[0], _repoOptions.RepoAccesTokken, filePaths, fileContents);
 
                         if (pushToRepo.Success)
                         {
+                            var pushRepositoryName = model.GitLabClientName + "/" + model.RepositoryName;
+
                             var deployCall = await this._hostingService.CreateHubAsync(
-                                model.RepositoryName, model.ProjectName, createRepoHubId.Message, hostingDeployKey.Message, _hostingOptions.HostAccesToken,
+                                model.ProjectName, pushRepositoryName, createRepoHubId.Message[0], hostingDeployKey.Message[0], _hostingOptions.HostAccesToken,
                                 model.ProjectCmdCommand, model.ProjectBuildDirName);
 
                             if (deployCall.Success)
                             {
-                                return RedirectToAction("Complete", "Home");
+                                return RedirectToAction("Complete", "Home", new { project = model.ProjectName });
                             }
                             else
                             {
-                                return RedirectToAction("Error", "Home", new { message = deployCall.Message });
+                                return RedirectToAction("Error", "Home", new { message = deployCall.Message[0] });
                             }
                         }
                         else
                         {
-                            return RedirectToAction("Error", "Home", new { message = pushToRepo.Message });
+                            return RedirectToAction("Error", "Home", new { message = pushToRepo.Message[0] });
                         }
                     }
                     else
                     {
-                        return RedirectToAction("Error", "Home", new { message = repoUserKey.Message });
+                        return RedirectToAction("Error", "Home", new { message = repoUserKey.Message[0] });
                     }
 
                 }
                 else
                 {
-                    return RedirectToAction("Error", "Home", new { message = createRepoHubId.Message });
+                    return RedirectToAction("Error", "Home", new { message = createRepoHubId.Message[0] });
                 }
             }
             else
             {
-                return RedirectToAction("Error", "Home", new { message = hostingDeployKey.Message });
+                return RedirectToAction("Error", "Home", new { message = hostingDeployKey.Message[0] });
             }
 
 
         }
 
-        public IActionResult Complete()
+        public IActionResult Complete(string project)
         {
-            return View();
+            var model = new CompleteViewModel()
+            {
+                ProjectUrl = $"https://{project}.netlify.com"
+            };
+
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

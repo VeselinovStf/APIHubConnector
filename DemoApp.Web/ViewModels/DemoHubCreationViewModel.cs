@@ -4,6 +4,8 @@
     {
         public string RepositoryName { get; set; }
 
+        public string GitLabClientName { get; set; }
+
         public string ProjectName { get; set; }
 
         public string ProjectCmdCommand { get; set; }

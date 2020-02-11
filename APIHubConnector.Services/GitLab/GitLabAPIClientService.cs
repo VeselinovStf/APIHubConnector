@@ -26,31 +26,31 @@ namespace APIHUbConnector.Services.GitLab
             if (ServiceValidator.StringIsNullOrEmpty(accesToken))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(AddKey),
                         nameof(accesToken),
-                        "invalid_parameter_null_or_empty"));
+                        "invalid_parameter_null_or_empty") });
             }
 
             if (ServiceValidator.StringIsNullOrEmpty(key))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(AddKey),
                         nameof(key),
-                        "invalid_parameter_null_or_empty"));
+                        "invalid_parameter_null_or_empty") });
             }
 
             if (ServiceValidator.StringIsNullOrEmpty(title))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(AddKey),
                         nameof(title),
-                        "invalid_parameter_null_or_empty"));
+                        "invalid_parameter_null_or_empty") });
             }
 
             try
@@ -62,7 +62,7 @@ namespace APIHUbConnector.Services.GitLab
             catch (Exception ex)
             {
 
-                return new BaseResponse(false, ex.Message);
+                return new BaseResponse(false, new List<string>() { ex.Message });
             }
 
         }
@@ -72,33 +72,33 @@ namespace APIHUbConnector.Services.GitLab
             if (ServiceValidator.StringIsNullOrEmpty(name))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(CreateHubAsync),
                         nameof(name),
-                        "invalid_parameter_null_or_empty"));
+                        "invalid_parameter_null_or_empty") });
             }
 
             if (ServiceValidator.StringIsNullOrEmpty(accesTokken))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(CreateHubAsync),
                         nameof(accesTokken),
-                        "invalid_parameter_null_or_empty"));
+                        "invalid_parameter_null_or_empty") });
             }
 
             try
             {
                 var result = await client.PostCreateAsync(name, accesTokken);
 
-                return new BaseResponse(true, result);
+                return new BaseResponse(true, new List<string>() { result });
             }
             catch (Exception ex)
             {
 
-                return new BaseResponse(false, ex.Message);
+                return new BaseResponse(false, new List<string>() { ex.Message });
             }
 
         }
@@ -110,41 +110,41 @@ namespace APIHUbConnector.Services.GitLab
             if (ServiceValidator.StringIsNullOrEmpty(hubId))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(PushDataToHub),
                         nameof(hubId),
-                        "invalid_parameter_null_or_empty"));
+                        "invalid_parameter_null_or_empty") });
             }
 
             if (ServiceValidator.StringIsNullOrEmpty(accesTokken))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(PushDataToHub),
                         nameof(accesTokken),
-                        "invalid_parameter_null_or_empty"));
+                        "invalid_parameter_null_or_empty") });
             }
 
             if (ServiceValidator.ObjectIsNull(filePaths))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(PushDataToHub),
                         nameof(filePaths),
-                        "invalid_parameter_is_null"));
+                        "invalid_parameter_is_null") });
             }
 
             if (ServiceValidator.ObjectIsNull(fileContents))
             {
                 return new BaseResponse(false,
-                    ServiceValidator.MessageCreator(
+                     new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
                         nameof(PushDataToHub),
                         nameof(fileContents),
-                        "invalid_parameter_is_null"));
+                        "invalid_parameter_is_null") });
             }
 
             try
@@ -156,7 +156,7 @@ namespace APIHUbConnector.Services.GitLab
             catch (Exception ex)
             {
 
-                return new BaseResponse(false, ex.Message);
+                return new BaseResponse(false, new List<string>() { ex.Message });
             }
 
         }

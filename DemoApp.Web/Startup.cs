@@ -23,7 +23,7 @@ namespace DemoApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //1- Supply API Access Tokens ( Try User Secrets )
+            //1- Supply API Access Tokens ( Add User Secrets )
             services.Configure<AuthRepoHubConnectorOptions>(Configuration);
             services.Configure<AuthHostingConnectorOptions>(Configuration);
             //2- Register APIHubConnector
