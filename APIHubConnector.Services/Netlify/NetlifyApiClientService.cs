@@ -2,7 +2,7 @@
 using APIHubConnector.Services.Guard;
 using APIHubConnector.Services.Interfaces;
 using APIHubConnector.Services.Models;
-using APIHubConnector.Services.Netlify.DTOs;
+
 using APIHUbConnector.Core.Clients;
 
 using System;
@@ -111,7 +111,7 @@ namespace APIHUbConnector.Services.Netlify
         {
             if (ServiceValidator.StringIsNullOrEmpty(accesToken))
             {
-                return new DeplayKeyResponseDTO(false,
+                return new BaseResponse(false,
                     ServiceValidator.MessageCreator(
                         nameof(NetlifyApiClientService),
                         nameof(CreateDeployKey),
@@ -123,12 +123,12 @@ namespace APIHUbConnector.Services.Netlify
             {
                 var result = await client.DeployKeys(accesToken);
 
-                return new DeplayKeyResponseDTO(true, result.Id, result.PublicKey, result.CreatedAt);
+                return new BaseResponse(true, result.Id, result.PublicKey);
 
             }
             catch (Exception ex)
             {
-                return new DeplayKeyResponseDTO(false, ex.Message);
+                return new BaseResponse(false, ex.Message);
             }
 
         }

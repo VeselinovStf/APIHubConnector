@@ -4,7 +4,7 @@ namespace APIHubConnector.Services.Models
 {
     public class BaseResponse : BaseResponseCoreModel
     {
-
+        public string PublicKey { get; set; }
         public BaseResponse(bool success) : base(success)
         {
         }
@@ -13,6 +13,11 @@ namespace APIHubConnector.Services.Models
         {
 
 
+        }
+
+        public BaseResponse(bool succes, string message, string publicKey): base(succes,message)
+        {
+            PublicKey = publicKey;
         }
     }
 }
