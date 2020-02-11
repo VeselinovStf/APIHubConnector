@@ -16,6 +16,9 @@ namespace DemoApp.Web.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Required services for APIHC
+        /// </summary>
         private readonly INetlifyApiClientService<BaseResponse> _hostingService;
         private readonly IGitLabAPIClientService<BaseResponse> _repoService;
         private readonly IFileTransferrer<FileTransfererResult> _fileTransferrer;
@@ -43,6 +46,11 @@ namespace DemoApp.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Demo of the required steps for application task
+        /// </summary>
+        /// <param name="model">Required params to create project</param>
+        /// <returns>error view or view with project name - for url display</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(DemoHubCreationViewModel model)
@@ -118,6 +126,11 @@ namespace DemoApp.Web.Controllers
 
         }
 
+        /// <summary>
+        /// Display success
+        /// </summary>
+        /// <param name="project">name of the created project</param>
+        /// <returns>Model with prop for linking to created project. NOTE: DEPLOY NEED TIME - 3-4 MINS</returns>
         public IActionResult Complete(string project)
         {
             var model = new CompleteViewModel()
