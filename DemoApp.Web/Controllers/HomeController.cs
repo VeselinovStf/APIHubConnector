@@ -1,5 +1,7 @@
 ﻿using APIHubConnector.Services.Interfaces;
 using APIHubConnector.Services.Models;
+using APIHubConnector.Services.Public.DTOs;
+using APIHubConnector.Services.Public.Interfaces;
 using APIHUbConnector.Services.FileTransfer;
 using APIHUbConnector.Services.FileTransfer.DTOs;
 using DemoApp.Web.APIKeyModels;
@@ -17,26 +19,20 @@ namespace DemoApp.Web.Controllers
     public class HomeController : Controller
     {
         /// <summary>
-        /// Required services for APIHC
-        /// </summary>
-        private readonly INetlifyApiClientService<BaseResponse> _hostingService;
-        private readonly IGitLabAPIClientService<BaseResponse> _repoService;
-        private readonly IFileTransferrer<FileTransfererResult> _fileTransferrer;
+        /// Required services for APIHC - Create
+        /// </summary>     
         private readonly AuthRepoHubConnectorOptions _repoOptions;
         private readonly AuthHostingConnectorOptions _hostingOptions;
+        private readonly ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService;
 
         public HomeController(
-            INetlifyApiClientService<BaseResponse> hostingService,
-            IGitLabAPIClientService<BaseResponse> repoService,
-            IFileTransferrer<FileTransfererResult> fileTransferrer,
+            ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService,
             IOptions<AuthRepoHubConnectorOptions> repoOptions,
             IOptions<AuthHostingConnectorOptions> hostingOptions)
         {
-            this._hostingService = hostingService;
-            this._repoService = repoService;
-            this._fileTransferrer = fileTransferrer;
             this._repoOptions = repoOptions.Value;
             this._hostingOptions = hostingOptions.Value;
+            this.siteStorageCreatorService = siteStorageCreatorService;
         }
 
         public IActionResult Index()
@@ -55,75 +51,25 @@ namespace DemoApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(DemoHubCreationViewModel model)
         {
-            //Extract the process in custom service layer
-            //1- create hosting deploy key
-            var hostingDeployKey = await this._hostingService.CreateDeployKey(_hostingOptions.HostAccesToken);
+            //Call service with required params
+            var serviceCall = await this.siteStorageCreatorService.ExecuteAsync(
+                _hostingOptions.HostAccesToken, _repoOptions.RepoAccesTokken,
+                model.RepositoryName, model.ProjectName, model.GitLabClientName,
+                model.ProjectCmdCommand, model.ProjectBuildDirName, model.LocalPathToProjectTemplate);
 
-            if (hostingDeployKey.Success)
+            // Check result
+            if (serviceCall.Success)
             {
-                //2- Create repo and get id
-                var createRepoHubId = await this._repoService.CreateHubAsync(model.RepositoryName, _repoOptions.RepoAccesTokken);
+                var param = serviceCall.Message[0];
 
-                if (createRepoHubId.Success)
-                {
-                    //3- add deploy key to repository
-                    var repoUserKey = await this._repoService.AddKey(_repoOptions.RepoAccesTokken, hostingDeployKey.Message[1], model.ProjectName);
-
-                    if (repoUserKey.Success)
-                    {
-                        //4- get project files
-                        var filePaths = new List<string>();
-                        var fileContents = new List<string>();
-
-                        var defaultStoreTypeSiteFileRead = await this._fileTransferrer.FilesToList(model.LocalPathToProjectTemplate);
-
-                        filePaths = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FilePath));
-                        fileContents = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FileContent));
-
-                        //5- Push all files to repository
-                        var pushToRepo = await this._repoService.PushDataToHub(createRepoHubId.Message[0], _repoOptions.RepoAccesTokken, filePaths, fileContents);
-
-                        if (pushToRepo.Success)
-                        {
-                            //6- update Hosting repository name 
-                            var pushRepositoryName = model.GitLabClientName + "/" + model.RepositoryName;
-
-                            //7- deploy project try gitlab to netlify
-                            var deployCall = await this._hostingService.CreateHubAsync(
-                                model.ProjectName, pushRepositoryName, createRepoHubId.Message[0], hostingDeployKey.Message[0], _hostingOptions.HostAccesToken,
-                                model.ProjectCmdCommand, model.ProjectBuildDirName);
-
-                            if (deployCall.Success)
-                            {
-                                return RedirectToAction("Complete", "Home", new { project = model.ProjectName });
-                            }
-                            else
-                            {
-                                return RedirectToAction("Error", "Home", new { message = deployCall.Message[0] });
-                            }
-                        }
-                        else
-                        {
-                            return RedirectToAction("Error", "Home", new { message = pushToRepo.Message[0] });
-                        }
-                    }
-                    else
-                    {
-                        return RedirectToAction("Error", "Home", new { message = repoUserKey.Message[0] });
-                    }
-
-                }
-                else
-                {
-                    return RedirectToAction("Error", "Home", new { message = createRepoHubId.Message[0] });
-                }
+                return RedirectToAction("Complete", "Home", new { project = param });
             }
             else
             {
-                return RedirectToAction("Error", "Home", new { message = hostingDeployKey.Message[0] });
+                var param = serviceCall.Message[0];
+
+                return RedirectToAction("Error", "Home", new { message = param });
             }
-
-
         }
 
         /// <summary>

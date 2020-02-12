@@ -5,18 +5,19 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9F878D2C-C0B3-4152-B900-B6F5E9D77F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIHubConnector.Core", "APIHubConnector.Core\APIHubConnector.Core.csproj", "{C2F62F04-3912-4B7F-946E-B2018DF3B780}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIHubConnector.Core", "APIHubConnector.Core\APIHubConnector.Core.csproj", "{C2F62F04-3912-4B7F-946E-B2018DF3B780}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIHubConnector.Services", "APIHubConnector.Services\APIHubConnector.Services.csproj", "{4AF2C6BD-1E21-4149-8839-FCAF904CF869}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIHubConnector.Services", "APIHubConnector.Services\APIHubConnector.Services.csproj", "{4AF2C6BD-1E21-4149-8839-FCAF904CF869}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIHubConnector", "APIHubConnector", "{1598E8C0-9C70-4C1F-8E5E-8DD2B63146BB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoApp", "DemoApp", "{560E0B8B-68B1-4799-9D73-BD98191EE69B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Web", "DemoApp.Web\DemoApp.Web.csproj", "{6F7F2702-7B97-4BDB-8126-AD17CA462AAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Web", "DemoApp.Web\DemoApp.Web.csproj", "{6F7F2702-7B97-4BDB-8126-AD17CA462AAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E955F408-3CB6-41A3-8886-B5FEC4644506}"
 	ProjectSection(SolutionItems) = preProject
+		C:\Users\chofe\OneDrive\Pictures\demo.jpeg = C:\Users\chofe\OneDrive\Pictures\demo.jpeg
 		README.md = README.md
 	EndProjectSection
 EndProject

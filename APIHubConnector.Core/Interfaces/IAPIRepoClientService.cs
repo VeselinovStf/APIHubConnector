@@ -7,7 +7,7 @@ namespace APIHUbConnector.Core.Interfaces
     {
         Task<T> CreateHubAsync(string name, string accesTokken);
 
-        Task<T> PushDataToHub(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents);
+        Task<T> PushDataToHubAsync(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents);
     }
 
 

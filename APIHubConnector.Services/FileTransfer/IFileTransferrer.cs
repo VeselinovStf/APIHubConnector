@@ -10,6 +10,6 @@ namespace APIHUbConnector.Services.FileTransfer
         /// <param name="sourceDirName">Source of Directory name</param>
         /// <param name="copySubDirs">Poppy ir not sub dirrectoryes</param>
         /// <returns>List of T - object containing path and content of each file as string</returns>
-        Task<T> FilesToList(string sourceDirName, bool copySubDirs = true);
+        Task<T> FilesToListAsync(string sourceDirName, bool copySubDirs = true);
     }
 }

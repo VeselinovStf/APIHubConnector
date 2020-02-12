@@ -23,7 +23,7 @@ namespace APIHUbConnector.Services.FileTransfer
             this.imageExtensions = imageExtensions ?? throw new ArgumentNullException(nameof(imageExtensions));
         }
 
-        public async Task<FileTransfererResult> FilesToList(string sourceDirName, bool copySubDirs = true)
+        public async Task<FileTransfererResult> FilesToListAsync(string sourceDirName, bool copySubDirs = true)
         {
             var filePaths = new List<string>();
             var fileContents = new List<string>();
@@ -48,7 +48,7 @@ namespace APIHUbConnector.Services.FileTransfer
             catch (Exception ex)
             {
                 return new FileTransfererResult(
-                    false, $"{nameof(FileTransferrer)} : {nameof(FilesToList)} : Can't read file : {ex.Message} : " +
+                    false, $"{nameof(FileTransferrer)} : {nameof(FilesToListAsync)} : Can't read file : {ex.Message} : " +
                     $"{ (ex.InnerException.Message != null ? ex.InnerException.Message : "no inner exceptions")}");
             }
 

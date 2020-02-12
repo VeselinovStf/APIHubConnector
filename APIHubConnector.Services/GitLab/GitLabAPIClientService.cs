@@ -21,14 +21,14 @@ namespace APIHUbConnector.Services.GitLab
             this.client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public async Task<BaseResponse> AddKey(string accesToken, string key, string title)
+        public async Task<BaseResponse> AddKeyAsync(string accesToken, string key, string title)
         {
             if (ServiceValidator.StringIsNullOrEmpty(accesToken))
             {
                 return new BaseResponse(false,
                      new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
-                        nameof(AddKey),
+                        nameof(AddKeyAsync),
                         nameof(accesToken),
                         "invalid_parameter_null_or_empty") });
             }
@@ -38,7 +38,7 @@ namespace APIHUbConnector.Services.GitLab
                 return new BaseResponse(false,
                      new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
-                        nameof(AddKey),
+                        nameof(AddKeyAsync),
                         nameof(key),
                         "invalid_parameter_null_or_empty") });
             }
@@ -48,7 +48,7 @@ namespace APIHUbConnector.Services.GitLab
                 return new BaseResponse(false,
                      new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
-                        nameof(AddKey),
+                        nameof(AddKeyAsync),
                         nameof(title),
                         "invalid_parameter_null_or_empty") });
             }
@@ -105,14 +105,14 @@ namespace APIHUbConnector.Services.GitLab
 
 
 
-        public async Task<BaseResponse> PushDataToHub(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents)
+        public async Task<BaseResponse> PushDataToHubAsync(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents)
         {
             if (ServiceValidator.StringIsNullOrEmpty(hubId))
             {
                 return new BaseResponse(false,
                      new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
-                        nameof(PushDataToHub),
+                        nameof(PushDataToHubAsync),
                         nameof(hubId),
                         "invalid_parameter_null_or_empty") });
             }
@@ -122,7 +122,7 @@ namespace APIHUbConnector.Services.GitLab
                 return new BaseResponse(false,
                      new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
-                        nameof(PushDataToHub),
+                        nameof(PushDataToHubAsync),
                         nameof(accesTokken),
                         "invalid_parameter_null_or_empty") });
             }
@@ -132,7 +132,7 @@ namespace APIHUbConnector.Services.GitLab
                 return new BaseResponse(false,
                      new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
-                        nameof(PushDataToHub),
+                        nameof(PushDataToHubAsync),
                         nameof(filePaths),
                         "invalid_parameter_is_null") });
             }
@@ -142,7 +142,7 @@ namespace APIHUbConnector.Services.GitLab
                 return new BaseResponse(false,
                      new List<string>(){ServiceValidator.MessageCreator(
                         nameof(GitLabAPIClientService),
-                        nameof(PushDataToHub),
+                        nameof(PushDataToHubAsync),
                         nameof(fileContents),
                         "invalid_parameter_is_null") });
             }

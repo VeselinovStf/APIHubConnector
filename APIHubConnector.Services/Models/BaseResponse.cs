@@ -5,7 +5,11 @@ namespace APIHubConnector.Services.Models
 {
     public class BaseResponse : BaseResponseCoreModel
     {
-       
+        public BaseResponse()
+        {
+
+        }
+
         public BaseResponse(bool success) : base(success)
         {
         }

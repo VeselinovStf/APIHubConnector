@@ -5,7 +5,7 @@ namespace APIHubConnector.Core.Models
     public class BaseResponseCoreModel
     {
         public IList<string> Message { get; }
-        public bool Success { get; }
+        public bool Success { get; set; }
 
         public BaseResponseCoreModel()
         {
