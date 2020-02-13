@@ -59,7 +59,7 @@ namespace DemoApp.Web.Controllers
                 var serviceCall = await this.siteStorageCreatorService.ExecuteAsync(
                     _hostingOptions.HostAccesToken, _repoOptions.RepoAccesTokken,
                     model.RepositoryName, model.ProjectName, model.GitLabClientName,
-                    model.ProjectCmdCommand, model.ProjectBuildDirName, 
+                    model.ProjectCmdCommand, model.ProjectBuildDirName,
                     localFilesTransferServiceCall.FilePaths,
                     localFilesTransferServiceCall.FileContents);
 

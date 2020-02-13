@@ -18,6 +18,6 @@ namespace APIHubConnector.Utility.Services.Public.DTOs
             FileContents = new List<string>(fileContents);
         }
 
-       
+
     }
 }

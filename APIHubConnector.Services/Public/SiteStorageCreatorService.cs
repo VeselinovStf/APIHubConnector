@@ -56,7 +56,7 @@ namespace APIHubConnector.Services.Public
 
                         if (repoUserKey.Success)
                         {
-                          
+
                             //4- Push all files to repository
                             var pushToRepo = await this._repoService.PushDataToHubAsync(repositoryId, repositoryAccesToken, filePaths, fileContents);
 
