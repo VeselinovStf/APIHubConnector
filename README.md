@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
+![](https://github.com/VeselinovStf/APIHubConnector/blob/master/repoImg/demo.jpeg)
+
 APIHC allows users to upload local project to GitLab and deploy it try Netlify.APIHC is tested with deploying of local Jekyll project
 
 # Features!
