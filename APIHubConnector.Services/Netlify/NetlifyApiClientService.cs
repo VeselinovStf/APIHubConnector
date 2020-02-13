@@ -131,7 +131,7 @@ namespace APIHUbConnector.Services.Netlify
                 responseMessage.Add(id);
                 responseMessage.Add(publicKey);
 
-                return new BaseResponse(true, new List<string>(responseMessage) );
+                return new BaseResponse(true, new List<string>(responseMessage));
 
             }
             catch (Exception ex)

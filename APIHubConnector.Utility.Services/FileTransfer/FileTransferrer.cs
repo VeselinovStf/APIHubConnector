@@ -1,14 +1,14 @@
-﻿using APIHUbConnector.Services.FileRead;
-using APIHUbConnector.Services.FileRead.DTOs;
-using APIHUbConnector.Services.FileTransfer.DTOs;
-using APIHUbConnector.Services.FileTransfer.Extensions;
+﻿using APIHUbConnector.Utility.Services.FileRead;
+using APIHUbConnector.Utility.Services.FileRead.DTOs;
+using APIHUbConnector.Utility.Services.FileTransfer.DTOs;
+using APIHUbConnector.Utility.Services.FileTransfer.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace APIHUbConnector.Services.FileTransfer
+namespace APIHUbConnector.Utility.Services.FileTransfer
 {
     public class FileTransferrer : IFileTransferrer<FileTransfererResult>
     {

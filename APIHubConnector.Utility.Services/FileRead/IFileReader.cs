@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace APIHUbConnector.Services.FileRead
+namespace APIHUbConnector.Utility.Services.FileRead
 {
     public interface IFileReader<T>
     {

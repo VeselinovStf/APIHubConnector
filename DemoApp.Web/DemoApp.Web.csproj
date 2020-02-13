@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\APIHubConnector.Services\APIHubConnector.Services.csproj" />
+    <ProjectReference Include="..\APIHubConnector.Utility.Services\APIHubConnector.Utility.Services.csproj" />
   </ItemGroup>
 
 </Project>

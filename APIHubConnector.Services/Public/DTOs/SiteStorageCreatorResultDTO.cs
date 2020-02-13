@@ -1,7 +1,5 @@
 ﻿using APIHubConnector.Services.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace APIHubConnector.Services.Public.DTOs
 {

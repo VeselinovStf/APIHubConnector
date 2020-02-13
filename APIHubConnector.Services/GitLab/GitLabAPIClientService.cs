@@ -105,7 +105,8 @@ namespace APIHUbConnector.Services.GitLab
 
 
 
-        public async Task<BaseResponse> PushDataToHubAsync(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents)
+        public async Task<BaseResponse> PushDataToHubAsync(
+            string hubId, string accesTokken, IList<string> filePaths, IList<string> fileContents)
         {
             if (ServiceValidator.StringIsNullOrEmpty(hubId))
             {

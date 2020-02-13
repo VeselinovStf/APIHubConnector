@@ -1,4 +1,4 @@
-﻿namespace APIHUbConnector.Services.FileTransfer.DTOs
+﻿namespace APIHUbConnector.Utility.Services.FileTransfer.DTOs
 {
     public class ConvertedFileElement
     {

@@ -1,6 +1,6 @@
 ﻿
 
-namespace APIHUbConnector.Services.FileRead.DTOs
+namespace APIHUbConnector.Utility.Services.FileRead.DTOs
 {
     public class FileReaderResult
     {

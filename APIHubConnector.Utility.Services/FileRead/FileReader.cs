@@ -1,9 +1,9 @@
-﻿using APIHUbConnector.Services.FileRead.DTOs;
+﻿using APIHUbConnector.Utility.Services.FileRead.DTOs;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace APIHUbConnector.Services.FileRead
+namespace APIHUbConnector.Utility.Services.FileRead
 {
     public class FileReader : IFileReader<FileReaderResult>
     {

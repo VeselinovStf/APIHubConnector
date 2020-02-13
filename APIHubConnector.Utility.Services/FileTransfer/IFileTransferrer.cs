@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace APIHUbConnector.Services.FileTransfer
+namespace APIHUbConnector.Utility.Services.FileTransfer
 {
     public interface IFileTransferrer<T>
     {

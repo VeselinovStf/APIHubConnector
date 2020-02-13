@@ -1,17 +1,13 @@
-﻿using APIHubConnector.Services.Interfaces;
-using APIHubConnector.Services.Models;
-using APIHubConnector.Services.Public.DTOs;
+﻿using APIHubConnector.Services.Public.DTOs;
 using APIHubConnector.Services.Public.Interfaces;
-using APIHUbConnector.Services.FileTransfer;
-using APIHUbConnector.Services.FileTransfer.DTOs;
+using APIHubConnector.Utility.Services.Public.DTOs;
+using APIHubConnector.Utility.Services.Public.Interfaces;
 using DemoApp.Web.APIKeyModels;
 using DemoApp.Web.Models;
 using DemoApp.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DemoApp.Web.Controllers
@@ -24,15 +20,18 @@ namespace DemoApp.Web.Controllers
         private readonly AuthRepoHubConnectorOptions _repoOptions;
         private readonly AuthHostingConnectorOptions _hostingOptions;
         private readonly ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService;
+        private readonly ILocalStorageFileTransfer<LocalStorageFileTransferResultDTO> _localStorageFileTransfer;
 
         public HomeController(
             ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService,
+            ILocalStorageFileTransfer<LocalStorageFileTransferResultDTO> localStorageFileTransfer,
             IOptions<AuthRepoHubConnectorOptions> repoOptions,
             IOptions<AuthHostingConnectorOptions> hostingOptions)
         {
             this._repoOptions = repoOptions.Value;
             this._hostingOptions = hostingOptions.Value;
             this.siteStorageCreatorService = siteStorageCreatorService;
+            this._localStorageFileTransfer = localStorageFileTransfer;
         }
 
         public IActionResult Index()
@@ -51,25 +50,40 @@ namespace DemoApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(DemoHubCreationViewModel model)
         {
-            //Call service with required params
-            var serviceCall = await this.siteStorageCreatorService.ExecuteAsync(
-                _hostingOptions.HostAccesToken, _repoOptions.RepoAccesTokken,
-                model.RepositoryName, model.ProjectName, model.GitLabClientName,
-                model.ProjectCmdCommand, model.ProjectBuildDirName, model.LocalPathToProjectTemplate);
+            var localFilesTransferServiceCall = await this._localStorageFileTransfer
+                .TransferAsync(model.LocalPathToProjectTemplate);
 
-            // Check result
-            if (serviceCall.Success)
+            if (localFilesTransferServiceCall.Success)
             {
-                var param = serviceCall.Message[0];
+                //Call service with required params
+                var serviceCall = await this.siteStorageCreatorService.ExecuteAsync(
+                    _hostingOptions.HostAccesToken, _repoOptions.RepoAccesTokken,
+                    model.RepositoryName, model.ProjectName, model.GitLabClientName,
+                    model.ProjectCmdCommand, model.ProjectBuildDirName, 
+                    localFilesTransferServiceCall.FilePaths,
+                    localFilesTransferServiceCall.FileContents);
 
-                return RedirectToAction("Complete", "Home", new { project = param });
+                // Check result
+                if (serviceCall.Success)
+                {
+                    var param = serviceCall.Message[0];
+
+                    return RedirectToAction("Complete", "Home", new { project = param });
+                }
+                else
+                {
+                    var param = serviceCall.Message[0];
+
+                    return RedirectToAction("Error", "Home", new { message = param });
+                }
             }
             else
             {
-                var param = serviceCall.Message[0];
+                var param = localFilesTransferServiceCall.Message;
 
                 return RedirectToAction("Error", "Home", new { message = param });
             }
+
         }
 
         /// <summary>

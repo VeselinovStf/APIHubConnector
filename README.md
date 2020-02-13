@@ -15,7 +15,7 @@ APIHC allows users to upload local project to GitLab and deploy it try Netlify.A
 
 You can also:
   - Extend existing futures
-  - Use builded futures - CreateHubAsync / PushDataToHub / FilesToListAsync
+  - Use builded futures - CreateHubAsync / PushDataToHub / TransferAsync /
 
 > This project is part of Static Store Builder 
 > core functionality
@@ -37,6 +37,7 @@ Use:
 ```sh
 APIHubConnector.Core
 APIHubConnector.Services
+APIHubConnector.Utility.Services
 ```
 
 ### Setting Up
@@ -70,7 +71,9 @@ services.AddHttpClient<GitLabHubClient>(c =>
     
 services.AddHttpClient<NetlifyHubClient>(c =>
    c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
-   ); 
+   );
+
+APIHubConnectorUtilityServiceConfiguration.ConfigureAPIConnectorUtility(services);
 ```
 ### Open APIs
 
@@ -78,6 +81,7 @@ services.AddHttpClient<NetlifyHubClient>(c =>
 INetlifyApiClientService<BaseResponse>
 IGitLabAPIClientService<BaseResponse>
 IFileTransferrer<FileTransfererResult>
+ILocalStorageFileTransfer<LocalStorageFileTransferResultDTO>
 IOptions<AuthRepoHubConnectorOptions>
 IOptions<AuthHostingConnectorOptions>
 ISiteStorageCreatorService<SiteStorageCreatorResultDTO> 

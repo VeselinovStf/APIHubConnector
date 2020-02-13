@@ -56,7 +56,7 @@ namespace APIHUbConnector.Core.Clients
             throw new GitHubClientPostCreateException($"{nameof(GitHubClientPostCreateException)} : Can't create post to repo hub : {response.StatusCode} : {response.RequestMessage}");
         }
 
-        public async Task<bool> PushToHubAsync(string hubId, string accesTokken, List<string> filePaths, List<string> fileContents)
+        public async Task<bool> PushToHubAsync(string hubId, string accesTokken, IList<string> filePaths, IList<string> fileContents)
         {
             var branch = "master";
             var commitMessage = "Initial";

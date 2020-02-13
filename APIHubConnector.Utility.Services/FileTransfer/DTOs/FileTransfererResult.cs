@@ -1,7 +1,7 @@
-﻿using APIHUbConnector.Services.FileRead.DTOs;
+﻿using APIHUbConnector.Utility.Services.FileRead.DTOs;
 using System.Collections.Generic;
 
-namespace APIHUbConnector.Services.FileTransfer.DTOs
+namespace APIHUbConnector.Utility.Services.FileTransfer.DTOs
 {
     public sealed class FileTransfererResult : FileReaderResult
     {

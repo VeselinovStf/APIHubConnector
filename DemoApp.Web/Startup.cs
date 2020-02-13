@@ -1,4 +1,5 @@
 ﻿using APIHubConnector.Services;
+using APIHubConnector.Utility.Services;
 using APIHUbConnector.Core.Clients;
 using DemoApp.Web.APIKeyModels;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,8 @@ namespace DemoApp.Web
                c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
                );
 
+            //4- Add project reading function
+            APIHubConnectorUtilityServiceConfiguration.ConfigureAPIConnectorUtility(services);
 
             services.Configure<CookiePolicyOptions>(options =>
             {

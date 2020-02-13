@@ -2,12 +2,8 @@
 using APIHubConnector.Services.Models;
 using APIHubConnector.Services.Public.DTOs;
 using APIHubConnector.Services.Public.Interfaces;
-using APIHUbConnector.Services.FileTransfer;
-using APIHUbConnector.Services.FileTransfer.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace APIHubConnector.Services.Public
@@ -16,24 +12,25 @@ namespace APIHubConnector.Services.Public
     {
         private readonly INetlifyApiClientService<BaseResponse> _hostingService;
         private readonly IGitLabAPIClientService<BaseResponse> _repoService;
-        private readonly IFileTransferrer<FileTransfererResult> _fileTransferrer;
-     
+
+
 
         public SiteStorageCreatorService(
             INetlifyApiClientService<BaseResponse> hostingService,
-            IGitLabAPIClientService<BaseResponse> repoService,
-            IFileTransferrer<FileTransfererResult> fileTransferrer)
-          
+            IGitLabAPIClientService<BaseResponse> repoService)
+
+
         {
             this._hostingService = hostingService;
             this._repoService = repoService;
-            this._fileTransferrer = fileTransferrer;           
+
         }
 
         public async Task<SiteStorageCreatorResultDTO> ExecuteAsync(
             string hostingAccesToken, string repositoryAccesToken,
             string repositoryName, string projectName, string repositoryClientName,
-            string projectCmdCommand, string projectBuildDirName, string localPathToProjectTemplate)
+            string projectCmdCommand, string projectBuildDirName,
+            IList<string> filePaths, IList<string> fileContents)
         {
             var result = new SiteStorageCreatorResultDTO();
 
@@ -59,24 +56,16 @@ namespace APIHubConnector.Services.Public
 
                         if (repoUserKey.Success)
                         {
-                            //4- get project files
-                            var filePaths = new List<string>();
-                            var fileContents = new List<string>();
-
-                            var defaultStoreTypeSiteFileRead = await this._fileTransferrer.FilesToListAsync(localPathToProjectTemplate);
-
-                            filePaths = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FilePath));
-                            fileContents = new List<string>(defaultStoreTypeSiteFileRead.Results.Select(p => p.FileContent));
-
-                            //5- Push all files to repository
+                          
+                            //4- Push all files to repository
                             var pushToRepo = await this._repoService.PushDataToHubAsync(repositoryId, repositoryAccesToken, filePaths, fileContents);
 
                             if (pushToRepo.Success)
                             {
-                                //6- update Hosting repository name 
+                                //5- update Hosting repository name 
                                 var pushRepositoryName = repositoryClientName + "/" + repositoryName;
 
-                                //7- deploy project try gitlab to netlify
+                                //6- deploy project try gitlab to netlify
                                 var deployCall = await this._hostingService.CreateHubAsync(
                                     projectName, pushRepositoryName, repositoryId, hostingKeyId, hostingAccesToken,
                                     projectCmdCommand, projectBuildDirName);
@@ -116,7 +105,7 @@ namespace APIHubConnector.Services.Public
                     result.Success = false;
                     result.Message.Add(hostingDeployKey.Message[0]);
                 }
-                
+
             }
             catch (Exception ex)
             {

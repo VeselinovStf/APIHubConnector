@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace APIHUbConnector.Services.FileTransfer.Extensions
+namespace APIHUbConnector.Utility.Services.FileTransfer.Extensions
 {
     public static class StringExtensionMethods
     {
