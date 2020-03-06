@@ -1,5 +1,5 @@
-﻿using APIHubConnector.Services.Public.DTOs;
-using APIHubConnector.Services.Public.Interfaces;
+﻿//using APIHubConnector.Services.Public.DTOs;
+//using APIHubConnector.Services.Public.Interfaces;
 using APIHubConnector.Utility.Services.Public.DTOs;
 using APIHubConnector.Utility.Services.Public.Interfaces;
 using DemoApp.Web.APIKeyModels;
@@ -19,18 +19,18 @@ namespace DemoApp.Web.Controllers
         /// </summary>     
         private readonly AuthRepoHubConnectorOptions _repoOptions;
         private readonly AuthHostingConnectorOptions _hostingOptions;
-        private readonly ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService;
+        //private readonly ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService;
         private readonly ILocalStorageFileTransfer<LocalStorageFileTransferResultDTO> _localStorageFileTransfer;
 
         public HomeController(
-            ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService,
+           // ISiteStorageCreatorService<SiteStorageCreatorResultDTO> siteStorageCreatorService,
             ILocalStorageFileTransfer<LocalStorageFileTransferResultDTO> localStorageFileTransfer,
             IOptions<AuthRepoHubConnectorOptions> repoOptions,
             IOptions<AuthHostingConnectorOptions> hostingOptions)
         {
             this._repoOptions = repoOptions.Value;
             this._hostingOptions = hostingOptions.Value;
-            this.siteStorageCreatorService = siteStorageCreatorService;
+            //this.siteStorageCreatorService = siteStorageCreatorService;
             this._localStorageFileTransfer = localStorageFileTransfer;
         }
 
@@ -50,39 +50,39 @@ namespace DemoApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(DemoHubCreationViewModel model)
         {
-            var localFilesTransferServiceCall = await this._localStorageFileTransfer
-                .TransferAsync(model.LocalPathToProjectTemplate);
+            //var localFilesTransferServiceCall = await this._localStorageFileTransfer
+            //    .TransferAsync(model.LocalPathToProjectTemplate);
 
-            if (localFilesTransferServiceCall.Success)
-            {
-                //Call service with required params
-                var serviceCall = await this.siteStorageCreatorService.ExecuteAsync(
-                    _hostingOptions.HostAccesToken, _repoOptions.RepoAccesTokken,
-                    model.RepositoryName, model.ProjectName, model.GitLabClientName,
-                    model.ProjectCmdCommand, model.ProjectBuildDirName,
-                    localFilesTransferServiceCall.FilePaths,
-                    localFilesTransferServiceCall.FileContents);
+            //if (localFilesTransferServiceCall.Success)
+            //{
+            //    //Call service with required params
+            //    var serviceCall = await this.siteStorageCreatorService.ExecuteAsync(
+            //        _hostingOptions.HostAccesToken, _repoOptions.RepoAccesTokken,
+            //        model.RepositoryName, model.ProjectName, model.GitLabClientName,
+            //        model.ProjectCmdCommand, model.ProjectBuildDirName,
+            //        localFilesTransferServiceCall.FilePaths,
+            //        localFilesTransferServiceCall.FileContents);
 
-                // Check result
-                if (serviceCall.Success)
-                {
-                    var param = serviceCall.Message[0];
+            //    // Check result
+            //    if (serviceCall.Success)
+            //    {
+            //        var param = serviceCall.Message[0];
 
-                    return RedirectToAction("Complete", "Home", new { project = param });
-                }
-                else
-                {
-                    var param = serviceCall.Message[0];
+            //        return RedirectToAction("Complete", "Home", new { project = param });
+            //    }
+            //    else
+            //    {
+            //        var param = serviceCall.Message[0];
 
-                    return RedirectToAction("Error", "Home", new { message = param });
-                }
-            }
-            else
-            {
-                var param = localFilesTransferServiceCall.Message;
+            //        return RedirectToAction("Error", "Home", new { message = param });
+            //    }
+            //}
+            //else
+            //{
+            //    var param = localFilesTransferServiceCall.Message;
 
-                return RedirectToAction("Error", "Home", new { message = param });
-            }
+            return RedirectToAction("Error", "Home"); //new { message = param });
+            //}
 
         }
 

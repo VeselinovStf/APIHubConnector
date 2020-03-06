@@ -1,6 +1,6 @@
-﻿using APIHubConnector.Services;
+﻿
 using APIHubConnector.Utility.Services;
-using APIHUbConnector.Core.Clients;
+
 using DemoApp.Web.APIKeyModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,15 +29,15 @@ namespace DemoApp.Web
             services.Configure<AuthRepoHubConnectorOptions>(Configuration);
             services.Configure<AuthHostingConnectorOptions>(Configuration);
             //2- Register APIHubConnector
-            APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);
-            //3- Add http client to ApiHubConnector HubClients with api ( use url from appsettings.json )
-            services.AddHttpClient<GitLabHubClient>(c =>
-                c.BaseAddress = new Uri("https://gitlab.com/api/v4/")
-                );
+            //APIHubConnectorServiceConfiguration.ConfigureAPIConnector(services);
+            ////3- Add http client to ApiHubConnector HubClients with api ( use url from appsettings.json )
+            //services.AddHttpClient<GitLabHubClient>(c =>
+            //    c.BaseAddress = new Uri("https://gitlab.com/api/v4/")
+            //    );
 
-            services.AddHttpClient<NetlifyHubClient>(c =>
-               c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
-               );
+            //services.AddHttpClient<NetlifyHubClient>(c =>
+            //   c.BaseAddress = new Uri("https://api.netlify.com/api/v1/")
+            //   );
 
             //4- Add project reading function
             APIHubConnectorUtilityServiceConfiguration.ConfigureAPIConnectorUtility(services);
